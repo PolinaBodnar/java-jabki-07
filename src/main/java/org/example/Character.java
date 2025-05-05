@@ -18,7 +18,7 @@ public class Character {
         System.out.println(name + " получил " + damage + " урона. Здоровье: " + health);
     }
 
-    // ✅ ДОБАВЬ ЭТО:
+
     public String getName() {
         return name;
     }
