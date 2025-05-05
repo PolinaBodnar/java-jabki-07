@@ -15,7 +15,7 @@ public class Dog extends Animal {
      * - помогает избежать ошибок (например, если ты опечатался в имени метода)
      */
     @Override
-    public void speak() {
+    public void makeSound() {
         System.out.println("Woof");
     }
 }

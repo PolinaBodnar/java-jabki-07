@@ -1,65 +1,68 @@
-import org.example.*;
+package org.example;
 
 public class Main {
-
     public static void main(String[] args) {
 
-        /**
-         * Классы Animal & Dog
-         * Наследование (extends)
-         * Наследование — это механизм, при котором один класс может унаследовать свойства и методы другого класса.
-         */
-        Dog dog = new Dog();
-        Animal animal = new Animal();
+        // ==== 1. Банковские счета ====
+        System.out.println("--- Банковские счета ---");
+        Account[] accounts = {
+                new SavingsAccount("ACC123", 5000, 0.05),
+                new CreditAccount("ACC456", 1000, 500)
+        };
 
-        /**
-         * Классы Animal & Dog
-         * Переопределение методов (@Override)
-         * Переопределение — это написание своей версии метода, который уже есть в суперклассе.
-         */
-        dog.speak();
-        animal.speak();
+        accounts[0].deposit(1000);
+        accounts[1].withdraw(1200);
 
-        /**
-         * Классы Vehicle & Car
-         * Ключевое слово super
-         * Используется, чтобы:
-         * - Вызвать конструктор суперкласса
-         * - Вызвать метод родителя
-         */
-        Car car = new Car("Лада", "Нива");
-        car.startEngine();
-
-        /**
-         * - Класс Car наследует Vehicle
-         * - В конструкторе Car используется super(brand), чтобы вызвать конструктор Vehicle
-         * - Метод startEngine() переопределён, но всё ещё вызывает оригинальный метод родителя
-         * через super.startEngine() — это позволяет дополнить, а не заменить поведение
-         */
-
-        /**
-         * Классы Shape & Circle & Rectangle
-         * Полиморфизм (от греч. «много форм») — это способность одного "интерфейса" работать с объектами разных типов.
-         *
-         * Полиморфизм обычно проявляется через:
-         * - наследование (extends)
-         * - переопределение методов (@Override)
-         * - использование ссылок суперкласса для объектов подклассов (super)
-         */
-        Shape[] shapes = { new Circle(), new Rectangle(), new Shape() };
-        for (Shape s : shapes) {
-            s.draw();
+        for (Account acc : accounts) {
+            acc.withdraw(200);
+            acc.displayInfo();
+            if (acc instanceof SavingsAccount) {
+                ((SavingsAccount) acc).applyInterest();
+                acc.displayInfo();
+            }
         }
 
-        /**
-         * Что даёт полиморфизм?
-         * Гибкость: можно обрабатывать объекты по общему интерфейсу
-         * Расширяемость: добавление новых подклассов — без изменения старого кода
-         * Упрощение кода: меньше условий, меньше зависимостей
-         *
-         * Примеры из жизни:
-         * - Мы используем клавиатуру, мышь, сканер для ввода информации (один метод read(..)), но везде своя реализация
-         * - В комании работают разные люди и все получают зарплату, но реализация может отличаться (в продажах сделка, у разработчиков фикс)
-         */
+        // ==== 2. Система доставки ====
+        System.out.println("\n--- Система доставки ---");
+        VehicleOne truck = new Truck(120, 10000);
+        VehicleOne drone = new Drone(60, 5);
+
+        startDelivery(truck, "Москва");
+        startDelivery(drone, "Санкт-Петербург");
+
+        // ==== 3. Зоопарк ====
+        System.out.println("\n--- Зоопарк ---");
+        Animal[] zoo = {
+                new Lion("Лев", 5),
+                new Parrot("Кеша", 2)
+        };
+
+        for (Animal animal : zoo) {
+            animal.makeSound();
+            animal.eat();
+            if (animal instanceof Lion) {
+                ((Lion) animal).hunt();
+            }
+        }
+
+        // ==== 4. Игровые персонажи ====
+        System.out.println("\n--- Игровые персонажи ---");
+        Warrior warrior = new Warrior("Артур", 100);
+        Mage mage = new Mage("Мерлин", 80);
+
+        System.out.println(warrior.getName() + " атакует:");
+        warrior.attack();
+        mage.takeDamage(20);
+
+        System.out.println(mage.getName() + " атакует:");
+        mage.attack();
+        warrior.takeDamage(30);
+
+        warrior.block();
+        mage.heal();
+    }
+
+    public static void startDelivery(VehicleOne vehicle, String address) {
+        vehicle.deliver(address);
     }
 }
